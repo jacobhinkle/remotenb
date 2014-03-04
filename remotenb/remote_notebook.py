@@ -2,7 +2,8 @@
 
 import re
 import time
-import numpy as np
+import random
+
 import jinja2 as jin
 
 import connection as co
@@ -43,7 +44,8 @@ class RemoteNotebook:
 		self.args['directory'] = kwargs.get('directory', '$HOME')
 		self.args['nodes'] = kwargs.get('nodes', 1)
 		self.args['pwd'] = kwargs.get('pwd', True)
-		self.args['remote_port'] = int(np.random.uniform(9000,60000,size=1)[0])
+		self.args['remote_port'] = random.randint(9000,60000)
+		#self.args['remote_port'] = int(np.random.uniform(9000,60000,size=1)[0])
 		self.args['cores'] = 12
 		
 
