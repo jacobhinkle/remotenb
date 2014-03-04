@@ -1,71 +1,178 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Remote notebook by ResearchComputing</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Remote notebook</h1>
-        <p>Lanuch an ipython notebook on the JANUS supercomputer.</p>
-
-        <p class="view"><a href="https://github.com/ResearchComputing/remote_notebook">View the Project on GitHub <small>ResearchComputing/remote_notebook</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/ResearchComputing/remote_notebook/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/ResearchComputing/remote_notebook/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/ResearchComputing/remote_notebook">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/ResearchComputing">ResearchComputing</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml">
+ 
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     
-  </body>
+    <title>Remote IPython Notebook</title>
+ 
+    <link rel="stylesheet" href="_static/rcstyle.css" type="text/css"/>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css"/>
+</head>
+ 
+<body>
+<div class="document">
+    <img src="https://www.rc.colorado.edu/sites/all/themes/research/logo.png">
+            <div class="body">
+                
+  <div class="section" id="remote-ipython-notebook">
+<h1>Remote IPython Notebook<a class="headerlink" href="#remote-ipython-notebook" title="Permalink to this headline">¶</a></h1>
+<p>This package will launch a PBS job and a remote <strong>IPython notebook</strong> on the JANUS supercomputer. The package is installed locally and nothing needs to be setup on the remote connection.  Instead, <em>remotenb</em> uses <a class="reference external" href="http://www.lag.net/paramiko/">paramiko</a> to move files and execute commands.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Requirements:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://jinja.pocoo.org/docs/">jinja2</a> 2.7.1</li>
+<li><a class="reference external" href="http://www.lag.net/paramiko/">paramiko</a> 1.12.2</li>
+</ul>
+<p>You should be able to build these packages with the following commands:</p>
+<div class="highlight-python"><div class="highlight"><pre>pip install jinja2
+pip install paramiko
+</pre></div>
+</div>
+<p>To build the package, type the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre>make build
+</pre></div>
+</div>
+<p>To install the package:</p>
+<div class="highlight-python"><div class="highlight"><pre>make install
+</pre></div>
+</div>
+<p>If you would like to install this locally, run the following commands:</p>
+<div class="highlight-python"><div class="highlight"><pre>python setup.py build
+python setup.py install --prefix=/install/path/
+</pre></div>
+</div>
+<p>Then make sure your Python path <cite>PYTHONPATH</cite> points to <cite>/install/path/</cite></p>
+<p>It is also important that you have an <cite>.ssh/config</cite> set up for JANUS.  First, you will need to create a control sockets directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkdir ~/.ssh/sockets
+</pre></div>
+</div>
+<p>Then add the following lines of code your your <cite>~/.ssh/config</cite> file:</p>
+<div class="highlight-python"><div class="highlight"><pre>Host login
+        HostName login.rc.colorado.edu
+        User molu8455
+        ControlMaster auto
+        ControlPath ~/.ssh/sockets/%r@%h:%p
+</pre></div>
+</div>
+<p>This will allow you to access janus by simply typing:</p>
+<div class="highlight-python"><div class="highlight"><pre>ssh login
+</pre></div>
+</div>
+<p>Please make sure this works before testing the remote notebook.</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>remotenb</cite> is really just an object and there are several ways to use it.  The most simple example just instantiates the object and calls the <cite>connect()</cite> method.</p>
+<p><tt class="xref download docutils literal"><span class="pre">example.py</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">remotenb</span> <span class="kn">as</span> <span class="nn">rnbk</span>
+ 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+	
+	<span class="n">rn</span> <span class="o">=</span> <span class="n">rnbk</span><span class="o">.</span><span class="n">RemoteNotebook</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;login&#39;</span><span class="p">)</span>
+	<span class="n">rn</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="c"># Waits</span>
+	
+</pre></div>
+</div>
+<p>Once you have your ssh config file working, you can try this example out by typing:</p>
+<div class="highlight-python"><div class="highlight"><pre>python example.py
+</pre></div>
+</div>
+<p>You should see something like the following:</p>
+<div class="highlight-python"><div class="highlight"><pre>bash-mac$ python example.py
+Password for molu8455@login:
+
+connecting to molu8455@login -p 53770
+submitting job
+2524645.moab.rc.colorado.edu
+waiting for job 2524645 to start
+creating new tunnel
+ssh -L 9999:node1073:24168 -f -N molu8455@login -p 53770
+CNTR-C to quit job and exit
+</pre></div>
+</div>
+<p>To terminate your session, type <cite>CTRL-C</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre>attempting to cancel job...
+notebook closed
+</pre></div>
+</div>
+</div>
+<div class="section" id="advanced-usage">
+<h2>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">¶</a></h2>
+<p>The following example provides an easy to use command line tool for managing your remote notebooks.</p>
+<p><tt class="xref download docutils literal"><span class="pre">example.py</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="kn">import</span> <span class="nn">remotenb</span> <span class="kn">as</span> <span class="nn">rnbk</span>
+
+<span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;default&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-q&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;queue name&#39;</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="s">&#39;janus-admin&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-n&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;number of nodes&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+ 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+	
+	<span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+	<span class="c"># My directory options</span>
+	<span class="n">directory</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+	<span class="n">base_dir</span> <span class="o">=</span> <span class="s">&#39;/projects/molu8455&#39;</span> <span class="c"># or $HOME</span>
+	<span class="n">directory</span><span class="p">[</span><span class="s">&#39;default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;notebooks&#39;</span>
+	<span class="n">directory</span><span class="p">[</span><span class="s">&#39;infiniband&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;infiniband/notebooks&#39;</span>
+	<span class="n">directory</span><span class="p">[</span><span class="s">&#39;tutorials&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;tutorials/meetup_spring_2014/master/notebooks&#39;</span>
+
+	<span class="c"># My defaults</span>
+	<span class="n">opts</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+	<span class="n">opts</span><span class="p">[</span><span class="s">&#39;hostname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;login&#39;</span>
+	<span class="n">opts</span><span class="p">[</span><span class="s">&#39;username&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;molu8455&#39;</span>
+	<span class="n">opts</span><span class="p">[</span><span class="s">&#39;queue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">q</span>
+	<span class="n">opts</span><span class="p">[</span><span class="s">&#39;nodes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">n</span>
+	<span class="n">opts</span><span class="p">[</span><span class="s">&#39;walltime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;04:00:00&#39;</span>
+	<span class="n">opts</span><span class="p">[</span><span class="s">&#39;local_port&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9999</span>
+
+	<span class="k">try</span><span class="p">:</span>
+		<span class="n">opts</span><span class="p">[</span><span class="s">&#39;directory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">directory</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+	<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+		<span class="k">print</span><span class="p">(</span><span class="s">&#39;list of possible notebooks:&#39;</span><span class="p">)</span>
+		<span class="nb">map</span><span class="p">(</span><span class="k">print</span><span class="p">,</span> <span class="n">directory</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+		<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+	<span class="n">rn</span> <span class="o">=</span> <span class="n">rnbk</span><span class="o">.</span><span class="n">RemoteNotebook</span><span class="p">(</span><span class="o">**</span><span class="n">opts</span><span class="p">)</span>
+	<span class="n">rn</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="c"># Waits</span>
+	
+</pre></div>
+</div>
+<p>I make this an executable and copy it to my <cite>~/bin</cite> directory.  Then I can type the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">notebook</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>which will launch my default location with my default values.  Or I may want to use a different queue and location:</p>
+<div class="highlight-python"><div class="highlight"><pre>notebook.py infiniband -q crc-serial
+</pre></div>
+</div>
+<p>this takes me to the <cite>infiniband/notebooks</cite> directory on a <cite>crc-serial</cite> queue.  Finally, I may want a few extra nodes:</p>
+<div class="highlight-python"><div class="highlight"><pre>notebook.py tutorials -n 3
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            </div>
+</div>
+ 
+</body>
 </html>
