@@ -31,7 +31,6 @@ if __name__ == '__main__':
 	opts['hostname'] = 'login'
 	opts['username'] = 'molu8455'
 	opts['queue'] = args.q
-	opts['pwd'] = False
 	opts['nodes'] = args.n
 	opts['walltime'] = '04:00:00'
 	opts['local_port'] = 9999

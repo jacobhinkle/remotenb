@@ -36,10 +36,10 @@ class RemoteNotebook:
 		self.args = {}
 		self.args['hostname'] = kwargs.get('hostname', None)
 		self.args['username'] = kwargs.get('username', None)
-		self.args['port'] = kwargs.get('port', None)
+		self.args['port'] = kwargs.get('port', 22)
 
 		self.args['local_port'] = kwargs.get('local_port', 9999)
-		self.args['walltime'] = kwargs.get('walltime', '04:00:00')
+		self.args['walltime'] = kwargs.get('walltime', '01:00:00')
 		self.args['queue'] = kwargs.get('queue', 'janus-debug')
 		self.args['directory'] = kwargs.get('directory', '$HOME')
 		self.args['nodes'] = kwargs.get('nodes', 1)
@@ -73,7 +73,9 @@ class RemoteNotebook:
 		print '\tsubmitting job'
 		_, output, _ = rc.ssh.exec_command('cd .notebooks; /curc/tools/free/redhat_6_x86_64/torque-4.2.3/bin/qsub ipython_notebook.pbs')
 		
+		jobid = None
 		for lines in output:
+			print '\t' + lines
 			m = re.match(r'([0-9]+).moab.rc.colorado.edu', lines)
 			if m:
 				jobid = m.group(1)
@@ -126,7 +128,7 @@ class RemoteNotebook:
 		self.args['host'] = rc.host
 		self.args['port'] = rc.port
 
-		cstr = '\n\tconnecting to {0}@{1} -p{2}'
+		cstr = '\n\tconnecting to {0}@{1} -p {2}'
 		cstr = cstr.format(self.args['username'],
 							self.args['hostname'],
 							self.args['port'])
