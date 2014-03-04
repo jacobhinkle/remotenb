@@ -1,0 +1,21 @@
+*.py[cod]
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+
+# ipython
+.ipynb_checkpoints
+
+# documentation
+doc/_build
+doc/examples
+doc/notebooks
+
+# temporary files
+*.js
+*.html
+*.png
