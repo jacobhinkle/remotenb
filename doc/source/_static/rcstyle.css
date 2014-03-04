@@ -1,0 +1,14 @@
+
+
+@import url("basic.css");
+@import url("sphinxdoc.css");
+
+body{
+	border: none;
+	background-color: white;
+	max-width: 800px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
