@@ -3,13 +3,14 @@
 import re
 import time
 import random
+import sys
 
 import jinja2 as jin
 
 import connection as co
 import tunnel as tn
 
-template = jin.Template('''
+pbs_template = jin.Template('''
 #!/bin/bash
 #PBS -N ipython_notebook
 #PBS -q {{queue}}
@@ -24,11 +25,20 @@ echo $HOSTNAME > $HOME/.notebooks/node.$PBS_JOBNAME.$PBS_JOBID
 mkdir -p {{directory}}
 cd {{directory}}
 
-module load python/anaconda-1.9.1
+module purge
+module load epel openmpi-gcc python
+#module load anaconda-2.0
 
-ipython notebook --matplotlib=inline --port={{remote_port}} --ip='*' --script --no-browser
+ipython notebook --port={{remote_port}} --ip='*' --no-browser
 
 ''')
+
+
+template = pbs_template
+JOB_SUBMIT = '/nopt/torque/bin/qsub'
+JOB_DELETE = '/nopt/torque/bin/qdel'
+JOB_PATTERN = ''
+
 
 class RemoteNotebook:
 
@@ -45,9 +55,8 @@ class RemoteNotebook:
 		self.args['nodes'] = kwargs.get('nodes', 1)
 		self.args['pwd'] = kwargs.get('pwd', True)
 		self.args['remote_port'] = random.randint(9000,60000)
-		#self.args['remote_port'] = int(np.random.uniform(9000,60000,size=1)[0])
 		self.args['cores'] = 12
-		
+
 
 	def __str__(self):
 		tmp = 'RemoteNotebook\n'
@@ -71,25 +80,30 @@ class RemoteNotebook:
 
 	def _start_pbs_job(self, rc):
 		print '\tsubmitting job'
-		_, output, _ = rc.ssh.exec_command('cd .notebooks; /curc/tools/free/redhat_6_x86_64/torque-4.2.3/bin/qsub ipython_notebook.pbs')
-		
+		#_, output, _ = rc.ssh.exec_command('cd .notebooks; /curc/tools/free/redhat_6_x86_64/torque-4.2.3/bin/qsub ipython_notebook.pbs')
+		_, output, _ = rc.ssh.exec_command('cd .notebooks; ' + JOB_SUBMIT + ' ipython_notebook.pbs')
+
 		jobid = None
 		for lines in output:
 			print '\t' + lines
-			m = re.match(r'([0-9]+).moab.rc.colorado.edu', lines)
+			m = re.match(r'([0-9]+.[A-Za-z0-9.]+)', lines)
 			if m:
 				jobid = m.group(1)
 				return jobid
 
 	def _get_nodename(self, rc):
 		print '\twaiting for job', self.jobid, 'to start'
+		print '\t',
 		while True:
 			try:
-				filename = '.notebooks/node.ipython_notebook.{0}.moab.rc.colorado.edu'.format(self.jobid)
+				filename = '.notebooks/node.ipython_notebook.{0}'.format(self.jobid)
 				nodename = rc.sftp.open(filename, 'r').read().strip()
 				return nodename
 			except IOError:
-				time.sleep(10)	
+				print '.',
+				sys.stdout.flush()
+
+				time.sleep(10)
 
 	def _wait(self):
 		print '\tCNTR-C to quit job and exit'
@@ -102,13 +116,15 @@ class RemoteNotebook:
 			print '\tnotebook closed'
 
 	def close(self):
-	
-		rc = co.Connection(self.args['hostname'], 
-						   username = self.args['hostname'],
-						   port = self.args['hostname'],
+
+		rc = co.Connection(self.args['hostname'],
+						   username = self.args['username'],
+						   port = self.args['port'],
 						   pwd = self.args['pwd'])
 
-		cmd = '/curc/tools/free/redhat_6_x86_64/torque-4.2.3/bin/qdel {0}'.format(self.jobid)
+		#cmd = '/curc/tools/free/redhat_6_x86_64/torque-4.2.3/bin/qdel {0}'.format(self.jobid)
+		cmd = JOB_DELETE + ' {0}'.format(self.jobid)
+		print '\t', cmd
 		rc.ssh.exec_command(cmd)
 
 		cmd = 'rm .notebooks/*'
@@ -118,7 +134,7 @@ class RemoteNotebook:
 
 	def connect(self):
 
-		rc = co.Connection(self.args['hostname'], 
+		rc = co.Connection(self.args['hostname'],
 						   username = self.args['username'],
 						   port = self.args['port'],
 						   pwd = self.args['pwd'])
@@ -138,34 +154,26 @@ class RemoteNotebook:
 		self.jobid = self._start_pbs_job(rc)
 		self.nodename = self._get_nodename(rc)
 		rc.close()
-	    
+
 
 		tn.delete_tunnels()
-		tn.create_tunnel(self.nodename, 
-						 local_port=self.args['local_port'], 
-						 remote_port=self.args['remote_port'], 
+		tn.create_tunnel(self.nodename,
+						 local_port=self.args['local_port'],
+						 remote_port=self.args['remote_port'],
 						 hostname=self.args['hostname'],
 						 username = self.args['username'],
 						 port = self.args['port']
 						 )
 
 		self._wait()
-		
+
 
 
 if __name__ == '__main__':
 
-	rn = RemoteNotebook(hostname='login', 
-						directory='/projects/molu8455/notebooks', 
-						queue='janus-admin', 
+	rn = RemoteNotebook(hostname='login',
+						directory='/projects/molu8455/notebooks',
+						queue='janus-admin',
 						pwd=False)
 
 	rn.connect() # Waits
-
-
-
-
-
-
-
-

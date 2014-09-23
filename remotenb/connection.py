@@ -14,8 +14,8 @@ class Connection:
 		self.sftp = None
 
 		#self.ssh.load_system_host_keys()
-		self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())	
-		
+		self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
 		conf = paramiko.SSHConfig()
 		conf.parse(open(os.path.expanduser('~/.ssh/config')))
 		host = conf.lookup(hostname)
@@ -35,10 +35,10 @@ class Connection:
 
 	def __exit__(self, type, value, tb):
 		self.close()
-		
+
 	def __del__(self):
 		self.close()
-		
+
 	def close(self):
 		#print 'connection closed'
 		if self.sftp:
@@ -49,8 +49,8 @@ class Connection:
 	def _open_ssh(self):
 		try:
 			self.ssh.connect(
-				self.hostname, 
-				username = self.username, 
+				self.hostname,
+				username = self.username,
 				port = self.port,
 				key_filename = self.key_filename,
 				password = self.password,
@@ -66,7 +66,7 @@ class Connection:
 	def _open_sftp(self):
 		if not self.ssh.get_transport():
 			self._open_ssh()
-		self.sftp = self.ssh.open_sftp()	
+		self.sftp = self.ssh.open_sftp()
 
 	def _set_proxy(self, host):
 		proxy = None
@@ -98,7 +98,3 @@ if __name__ == '__main__':
 		_, output, _ = conn.ssh.exec_command('ls -l')
 		for out in output:
 			print out
-
-
-
-
